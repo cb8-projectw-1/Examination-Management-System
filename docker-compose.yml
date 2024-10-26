@@ -1,42 +1,31 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: exam_db
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-
   backend:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      DATABASE_URL: postgres://user:password@db:5432/exam_db
-    networks:
-      - app-network
-    depends_on:
-      - db
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
 
   frontend:
     build:
       context: .
-      dockerfile: frontend/Dockerfile
-    networks:
-      - app-network
+      dockerfile: nginx.Dockerfile
     ports:
-      - "3000:3000"
+      - "80:80"
+    volumes:
+      - ./static:/usr/share/nginx/html
 
-networks:
-  app-network:
-    driver: bridge
-
-volumes:
-  postgres_data:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: exam_db
+      POSTGRES_USER: exam_user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
