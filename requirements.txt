@@ -10,7 +10,6 @@ ipfsapi==0.4.4
 ipfshttpclient==0.4.12
 multiaddr==0.0.8
 netaddr==0.7.19
-pkg-resources==0.0.0
 psycopg2==2.8.4
 pycparser==2.19
 pytz==2019.3
