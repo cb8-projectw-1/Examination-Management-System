@@ -1,6 +1,8 @@
 # Use an official Python runtime as a parent image
 FROM python:3.10
 
+RUN pip install --upgrade pip
+
 # Set the working directory in the container
 WORKDIR /app
 
